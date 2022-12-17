@@ -6,23 +6,25 @@ import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
 
 import {client} from '../client';
+// window.gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
 
 const Login = () => {
    const navigate = useNavigate();
+
    const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
-
-    const{ name , googleId, imageUrl} = response.profileObj;
+    console.log(response.profileObj);
+    const { name , googleId, imageUrl } = response.profileObj;
 
     const doc={
       _id: googleId,
       _type: 'user',
-      userName: name,
+      userName: name, 
       image: imageUrl,
     }
     client.createIfNotExists(doc)
     .then(()=>{
-      navigate(`/`, { replace:true})
+      navigate(`/`, { replace: true })
 
     })
   }
